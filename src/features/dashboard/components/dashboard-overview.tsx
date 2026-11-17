@@ -20,10 +20,10 @@ export const DashboardOverview = observer(function DashboardOverview() {
     <Stack spacing={4}>
       <Stack spacing={1.5}>
         <Chip label="Next.js App Router" color="primary" sx={{ width: "fit-content" }} />
-        <Typography component="h1" variant="h3" fontWeight={800}>
+        <Typography component="h1" variant="h3" sx={{ fontWeight: 800 }}>
           {t("heroTitle")}
         </Typography>
-        <Typography color="text.secondary" maxWidth={720}>
+        <Typography color="text.secondary" sx={{ maxWidth: 720 }}>
           {t("heroDescription")}
         </Typography>
       </Stack>
@@ -37,8 +37,8 @@ export const DashboardOverview = observer(function DashboardOverview() {
           p: 3,
         }}
       >
-        <Stack spacing={2} alignItems="flex-start">
-          <Typography variant="h6" fontWeight={800}>
+        <Stack spacing={2} sx={{ alignItems: "flex-start" }}>
+          <Typography variant="h6" sx={{ fontWeight: 800 }}>
             Starter wiring
           </Typography>
           <Typography color="text.secondary">

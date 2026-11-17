@@ -48,8 +48,10 @@ export class RootStore {
   };
 }
 
-export const rootStore = new RootStore();
-export const StoreContext = React.createContext(rootStore);
+// No module-level store instance: on the server a module singleton is shared
+// by every request, which leaks one user's state into another's render.
+// StoreProvider creates one store per React tree instead.
+export const StoreContext = React.createContext<RootStore | null>(null);
 
 export function useStore() {
   const store = React.useContext(StoreContext);
