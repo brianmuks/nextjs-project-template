@@ -13,12 +13,15 @@ class SessionStore {
   constructor() {
     makeAutoObservable(this);
 
-    makePersistable(this, {
-      name: "SessionStore",
-      properties: ["user", "sidebarOpen"],
-      storage:
-        typeof window !== "undefined" ? window.localStorage : undefined,
-    });
+    // Persist only in the browser; the server-side store is per-request and
+    // must not register persistence (no storage, and nothing to hydrate).
+    if (typeof window !== "undefined") {
+      void makePersistable(this, {
+        name: "SessionStore",
+        properties: ["user", "sidebarOpen"],
+        storage: window.localStorage,
+      });
+    }
   }
 
   setUser = (user: Nullable<UserProfile>) => {
@@ -48,8 +51,10 @@ export class RootStore {
   };
 }
 
-export const rootStore = new RootStore();
-export const StoreContext = React.createContext(rootStore);
+// No module-level store instance: on the server a module singleton is shared
+// by every request, which leaks one user's state into another's render.
+// StoreProvider creates one store per React tree instead.
+export const StoreContext = React.createContext<RootStore | null>(null);
 
 export function useStore() {
   const store = React.useContext(StoreContext);

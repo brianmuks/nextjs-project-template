@@ -7,7 +7,9 @@ This starter follows a modular folder structure inspired by the Panuka Hub codeb
 ## Getting Started
 
 ```bash
+nvm use                    # Node 24 (.nvmrc)
 yarn install
+cp .env.example .env.local # set NEXT_PUBLIC_IMAGE_HOSTS for remote images
 yarn dev
 ```
 
