@@ -13,12 +13,15 @@ class SessionStore {
   constructor() {
     makeAutoObservable(this);
 
-    makePersistable(this, {
-      name: "SessionStore",
-      properties: ["user", "sidebarOpen"],
-      storage:
-        typeof window !== "undefined" ? window.localStorage : undefined,
-    });
+    // Persist only in the browser; the server-side store is per-request and
+    // must not register persistence (no storage, and nothing to hydrate).
+    if (typeof window !== "undefined") {
+      void makePersistable(this, {
+        name: "SessionStore",
+        properties: ["user", "sidebarOpen"],
+        storage: window.localStorage,
+      });
+    }
   }
 
   setUser = (user: Nullable<UserProfile>) => {

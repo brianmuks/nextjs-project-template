@@ -15,6 +15,8 @@ const nextConfig: NextConfig = {
     styledComponents: true,
   },
   images: {
+    // Don't follow redirects, so an allowed host can't bounce the optimiser elsewhere.
+    maximumRedirects: 0,
     remotePatterns: imageHosts.map((hostname) => ({
       protocol: "https" as const,
       hostname,
